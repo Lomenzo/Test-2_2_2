@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import web.model.Car;
+import web.service.CarService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,12 @@ import java.util.List;
 //1. Создайте еще один контроллер, замаппленный на /cars.
 @Controller
 public class CarController {
+    final CarService carService;
+
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
+
     @GetMapping(value = "/")
     public String postCars(ModelMap model) {
         //3. Создайте список из 5 машин.
@@ -21,14 +28,11 @@ public class CarController {
         cars.add(new Car("Peugeot", 206, "Blue"));
         cars.add(new Car("MitsubishiLancer", 8, "Yellow"));
 
-        List<Car> processedCarList = new ArrayList<>();
-        for (int x = 0; x < 3; x++) {
-            processedCarList.add(cars.get(x));
-        }
-
         //4. Создайте сервис с методом, который будет возвращать указанное число машин из созданного списка.
+        List<Car> newCarList = carService.getList(2,cars);
+
         List<String> messages = new ArrayList<>();
-        for (Car car : processedCarList) {
+        for (Car car : newCarList) {
             messages.add(car.getManufacturer() + " " + car.getSeries() + "  " + car.getColor());
         }
 
