@@ -3,14 +3,11 @@ package web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import web.model.Car;
 import web.service.CarService;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 //1. —оздайте еще один контроллер, замаппленный на /cars.
@@ -35,7 +32,7 @@ public class CarController {
         cars.add(new Car("MitsubishiLancer", 8, "Yellow"));
 
         //4. —оздайте сервис с методом, который будет возвращать указанное число машин из созданного списка.
-        List<Car> newCarList = (carService.getList((count > 5) ? 5 : count,cars));
+        List<Car> newCarList = (carService.getList((count > cars.size()) ? 5 : count, cars));
 
         List<String> automobiles = new ArrayList<>();
         for (Car car : newCarList) {
