@@ -3,10 +3,14 @@ package web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import web.model.Car;
 import web.service.CarService;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 //1. Создайте еще один контроллер, замаппленный на /cars.
@@ -18,8 +22,10 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping(value = "/")
-    public String postCars(ModelMap model) {
+
+
+    @GetMapping(value = "/cars")
+    public String postCars(@RequestParam (value = "count", defaultValue = "5") int count, ModelMap model) {
         //3. Создайте список из 5 машин.
         List<Car> cars = new ArrayList<>();
         cars.add(new Car("Porsche", 911, "Red"));
@@ -29,14 +35,15 @@ public class CarController {
         cars.add(new Car("MitsubishiLancer", 8, "Yellow"));
 
         //4. Создайте сервис с методом, который будет возвращать указанное число машин из созданного списка.
-        List<Car> newCarList = carService.getList(2,cars);
+        List<Car> newCarList = (carService.getList((count > 5) ? 5 : count,cars));
 
-        List<String> messages = new ArrayList<>();
+        List<String> automobiles = new ArrayList<>();
         for (Car car : newCarList) {
-            messages.add(car.getManufacturer() + " " + car.getSeries() + "  " + car.getColor());
+            automobiles.add(car.getManufacturer() + " " + car.getSeries() + "  " + car.getColor());
         }
 
-        model.addAttribute("messages", messages);
-        return "index";
+        model.addAttribute("automobiles", automobiles);
+
+        return "cars";
     }
 }
