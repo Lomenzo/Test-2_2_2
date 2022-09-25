@@ -3,13 +3,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>Automobiles list</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  </style>
 </head>
 <body>
-<div>
-  <th:block th:each="msg : ${automobiles}">
-    <h1 th:text="${msg}"></h1>
-  </th:block>
-</div>
+<table>
+    <tr>
+        <td>manufacturer</td>
+        <td>series</td>
+        <td>color</td>
+    </tr>
+    <tr th:each="lst : ${automobiles}">
+        <td th:utext="${lst.manufacturer}">manufacturer</td>
+        <td th:utext="${lst.series}">series</td>
+        <td th:utext="${lst.color}">color</td>
+    </tr>
+</table>
 </body>
 </html>

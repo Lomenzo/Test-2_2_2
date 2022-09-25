@@ -19,8 +19,6 @@ public class CarController {
         this.carService = carService;
     }
 
-
-
     @GetMapping(value = "/cars")
     public String postCars(@RequestParam (value = "count", defaultValue = "5") int count, ModelMap model) {
         //3. Создайте список из 5 машин.
@@ -33,14 +31,7 @@ public class CarController {
 
         //4. Создайте сервис с методом, который будет возвращать указанное число машин из созданного списка.
         List<Car> newCarList = (carService.getList((count > cars.size()) ? 5 : count, cars));
-
-        List<String> automobiles = new ArrayList<>();
-        for (Car car : newCarList) {
-            automobiles.add(car.getManufacturer() + " " + car.getSeries() + "  " + car.getColor());
-        }
-
-        model.addAttribute("automobiles", automobiles);
-
+        model.addAttribute("automobiles", newCarList);
         return "cars";
     }
 }
